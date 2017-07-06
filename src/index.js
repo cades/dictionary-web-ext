@@ -12,16 +12,16 @@ function updateDefinitionPanelStatusOn(...events) {
 }
 
 function updateDefinitionPanelStatus(e) {
+  const clickOutOfPanel = () => !panel.getDOMNode().contains(e.target)
   const selectedText = getSelectedText();
-  if (currentWord === selectedText) return;
-  currentWord = selectedText;
-
-  if (!selectedText && !panel.getDOMNode().contains(e.target)) {
+  if (clickOutOfPanel() && !selectedText) {
     panel.hide();
     panel.clear();
-    return;
   }
 
+  if (currentWord === selectedText) return;
+
+  currentWord = selectedText;
   getDefinitionOf(selectedText)
     .then((def) => {
       panel.updateDefinition(def);
