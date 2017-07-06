@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "CadesDict",
+  "version": "1.0",
+
+  "description": "Automatically lookup the word you select",
+
+  "icons": {
+    "48": "icons/dict-48.png"
+  },
+
+  "permissions": [
+    "http://www.dictionary.com/"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["dict.js"]
+    }
+  ]
+}
