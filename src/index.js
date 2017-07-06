@@ -11,29 +11,42 @@ function updateDefinitionPanelStatus(e) {
   currentWord = selectedText;
 
   if (!selectedText && !definitionPanel.contains(e.target)) {
-    hideDefinitionPanel();
-    clearDefinitionPanel();
+    panel.hide();
+    panel.clear();
     return;
   }
 
-  getDefinitionOf(selectedText).then(updateDefinition)
-    .then(resetPanelScroll).then(showDefinitionPanel);
+  getDefinitionOf(selectedText)
+    .then((def) => panel.updateDefinition(def))
+    .then(() => panel.resetScroll()).then(() => panel.show());
 }
 
-function showDefinitionPanel() {
-  definitionPanel.style.display = 'block';
-}
-
-function hideDefinitionPanel() {
-  definitionPanel.style.display = 'none';
-}
-
-function clearDefinitionPanel() {
-  definitionPanel.innerHTML = '';
-}
-
-function resetPanelScroll() {
-  definitionPanel.scrollTop = 0;
+const panel = {
+  show() {
+    definitionPanel.style.display = 'block';
+  },
+  hide() {
+    definitionPanel.style.display = 'none';
+  },
+  clear() {
+    definitionPanel.innerHTML = '';
+  },
+  resetScroll() {
+    definitionPanel.scrollTop = 0;
+  },
+  updateDefinition(def) {
+    const content = `
+    <h2 style="font-size: 22px; font-weight: normal">${def.word}</h2>
+    <h3 style="font-size: 18px; font-weight: normal">${def.header}</h3>
+    <ol style="list-style-type: decimal">
+      ${def.contents.map((text) => {
+          return '<li style="font-size: 14px">' + text + '</li>'
+        }).join('')
+      }
+    </ol>
+  `;
+    definitionPanel.innerHTML = content;
+  },
 }
 
 function getDefinitionOf(word) {
@@ -49,20 +62,6 @@ function getDefinitionOf(word) {
       const contents = [].map.call(doc.querySelectorAll('.def-content'), (node) => node.innerText.trim());
       return { word, header, contents };
     })
-}
-
-function updateDefinition(def) {
-  const content = `
-    <h2 style="font-size: 22px; font-weight: normal">${def.word}</h2>
-    <h3 style="font-size: 18px; font-weight: normal">${def.header}</h3>
-    <ol style="list-style-type: decimal">
-      ${def.contents.map((text) => {
-          return '<li style="font-size: 14px">' + text + '</li>'
-        }).join('')
-      }
-    </ol>
-  `;
-  definitionPanel.innerHTML = content;
 }
 
 const definitionPanel = document.createElement('div');
