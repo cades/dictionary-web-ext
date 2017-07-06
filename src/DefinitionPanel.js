@@ -12,14 +12,12 @@ const panelBase = {
     this.$el.scrollTop = 0;
   },
   updateDefinition(def) {
+    const toListItem = (text) => `<li style="font-size: 14px">${text}</li>`
     const content = `
     <h2 style="font-size: 22px; font-weight: normal">${def.word}</h2>
     <h3 style="font-size: 18px; font-weight: normal">${def.header}</h3>
     <ol style="list-style-type: decimal">
-      ${def.contents.map((text) => {
-          return '<li style="font-size: 14px">' + text + '</li>'
-        }).join('')
-      }
+      ${def.contents.map(toListItem).join('')}
     </ol>
     `;
     this.$el.innerHTML = content;
