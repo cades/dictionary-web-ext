@@ -5,10 +5,11 @@ import {getDefinitionOf} from './definition';
 const panel = createDefinitionPanel();
 var currentWord = '';
 
-document.body.addEventListener('mouseup', updateDefinitionPanelStatus);
-document.body.addEventListener('mousedown', updateDefinitionPanelStatus);
-document.body.addEventListener('click', updateDefinitionPanelStatus);
-document.body.addEventListener('keyup', updateDefinitionPanelStatus);
+updateDefinitionPanelStatusOn('mouseup', 'mousedown', 'click', 'keyup');
+
+function updateDefinitionPanelStatusOn(...events) {
+  events.forEach((event) => document.body.addEventListener(event, updateDefinitionPanelStatus));
+}
 
 function updateDefinitionPanelStatus(e) {
   const selectedText = getSelectedText();
