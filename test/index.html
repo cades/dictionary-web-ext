@@ -1,0 +1,22 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="mocha"></div>
+
+    <script src="/node_modules/mocha/mocha.js"></script>
+    <script src="/node_modules/respec-given/mocha/browser.js"></script>
+
+    <script>mocha.setup('respec-given')</script>
+    <script src="/dist/test-bundle.js"></script>
+
+    <script>
+      mocha.checkLeaks();
+      mocha.globals(['jQuery']);
+      mocha.run();
+    </script>
+</body>
+</html>
