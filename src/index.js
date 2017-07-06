@@ -1,3 +1,5 @@
+import getSelectedText from './getSelectedText';
+
 document.body.addEventListener('mouseup', updateDefinitionPanelStatus);
 document.body.addEventListener('mousedown', updateDefinitionPanelStatus);
 document.body.addEventListener('click', updateDefinitionPanelStatus);
@@ -16,14 +18,6 @@ function updateDefinitionPanelStatus(e) {
 
   getDefinitionOf(selectedText).then(updateDefinition)
     .then(resetPanelScroll).then(showDefinitionPanel);
-}
-
-function getSelectedText() {
-  if (window.getSelection)
-    return window.getSelection().toString();
-  if (document.selection)
-    return document.selection.createRange().text;
-  return '';
 }
 
 function showDefinitionPanel() {
