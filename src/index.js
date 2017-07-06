@@ -10,7 +10,7 @@ function updateDefinitionPanelStatus(e) {
   if (currentWord === selectedText) return;
   currentWord = selectedText;
 
-  if (!selectedText && !definitionPanel.contains(e.target)) {
+  if (!selectedText && !panel.getDOMNode().contains(e.target)) {
     panel.hide();
     panel.clear();
     return;
@@ -21,18 +21,18 @@ function updateDefinitionPanelStatus(e) {
     .then(() => panel.resetScroll()).then(() => panel.show());
 }
 
-const panel = {
+const panelBase = {
   show() {
-    definitionPanel.style.display = 'block';
+    this.$el.style.display = 'block';
   },
   hide() {
-    definitionPanel.style.display = 'none';
+    this.$el.style.display = 'none';
   },
   clear() {
-    definitionPanel.innerHTML = '';
+    this.$el.innerHTML = '';
   },
   resetScroll() {
-    definitionPanel.scrollTop = 0;
+    this.$el.scrollTop = 0;
   },
   updateDefinition(def) {
     const content = `
@@ -45,8 +45,31 @@ const panel = {
       }
     </ol>
   `;
-    definitionPanel.innerHTML = content;
+    this.$el.innerHTML = content;
   },
+  getDOMNode() {
+    return this.$el;
+  }
+}
+
+function createDefinitionPanel() {
+  const $el = document.createElement('div');
+
+  Object.assign($el.style, {
+    position: 'fixed',
+    display: 'none',
+    right: '10px',
+    bottom: '10px',
+    width: `${window.innerWidth / 2}px`,
+    height: `${window.innerHeight / 2}px`,
+    backgroundColor: '#EFEFEF',
+    border: 'solid 1px #FFCB51',
+    overflowY: 'scroll',
+    paddingLeft: '15px',
+    paddingRight: '15px',
+  });
+
+  return Object.assign(Object.create(panelBase), {$el});
 }
 
 function getDefinitionOf(word) {
@@ -64,21 +87,7 @@ function getDefinitionOf(word) {
     })
 }
 
-const definitionPanel = document.createElement('div');
+const panel = createDefinitionPanel();
 var currentWord = '';
 
-Object.assign(definitionPanel.style, {
-  position: 'fixed',
-  display: 'none',
-  right: '10px',
-  bottom: '10px',
-  width: `${window.innerWidth / 2}px`,
-  height: `${window.innerHeight / 2}px`,
-  backgroundColor: '#EFEFEF',
-  border: 'solid 1px #FFCB51',
-  overflowY: 'scroll',
-  paddingLeft: '15px',
-  paddingRight: '15px',
-});
-
-document.body.appendChild(definitionPanel);
+document.body.appendChild(panel.getDOMNode());
