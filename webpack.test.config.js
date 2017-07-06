@@ -2,11 +2,13 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './test/test.js',
+  entry: {
+    'test.DefinitionPanel': './test/test.DefinitionPanel.js',
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'test-bundle.js',
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [
