@@ -21,8 +21,11 @@ function updateDefinitionPanelStatus(e) {
   }
 
   getDefinitionOf(selectedText)
-    .then((def) => panel.updateDefinition(def))
-    .then(() => panel.resetScroll()).then(() => panel.show());
+    .then((def) => {
+      panel.updateDefinition(def);
+      panel.resetScroll();
+      panel.show();
+    })
 }
 
 function getDefinitionOf(word) {
