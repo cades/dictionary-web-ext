@@ -21,7 +21,7 @@ const panelBase = {
         }).join('')
       }
     </ol>
-  `;
+    `;
     this.$el.innerHTML = content;
   },
   getDOMNode() {
