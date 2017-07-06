@@ -14,7 +14,7 @@ watch & build
 
 `npm run dev`
 
-watch & build test code
+watch & build test code. open `http://localhost:8000/test` to run tests.
 
 `npm run tdd`
 
